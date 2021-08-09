@@ -6,6 +6,7 @@ import io.micronaut.http.client.annotation.Client;
 import io.micronaut.http.client.HttpClient;
 import io.micronaut.http.HttpRequest;
 import io.micronaut.views.View;
+import io.micronaut.http.uri.UriBuilder;
 
 import javax.inject.Inject;
 
@@ -24,12 +25,15 @@ public class Tester {
 
     @View("/index")
     @Get
-    public PexelPhotoResponse index() {
-        return main();
+    public PexelPhotoResponse index(String q) {
+        return main(q);
     }
 
     @Get("/pexels")
-    public PexelPhotoResponse main() {
+    public PexelPhotoResponse main(String q) {
+        String uri = UriBuilder.of("https://api.pexels.com/v1/search")
+            .queryParam("query", q)
+            .toString();
         return client.toBlocking()
                 .retrieve(
                         HttpRequest.GET(uri)
