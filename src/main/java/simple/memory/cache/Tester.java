@@ -21,7 +21,11 @@ import javax.annotation.Generated;
 @Controller
 public class Tester {
 
-    SimpleMemoryCache<String, PexelPhotoResponse> cache = new SimpleMemoryCache();
+    SimpleMemoryCache<String, PexelPhotoResponse> cache;
+
+    public Tester() {
+        cache = new SimpleMemoryCache(5);
+    }
 
     @Inject
     @Client
