@@ -76,6 +76,10 @@
       <artifactId>micronaut-runtime</artifactId>
       <scope>compile</scope>
     </dependency>
+    <dependency>
+      <groupId>io.micronaut.views</groupId>
+      <artifactId>micronaut-views-pebble</artifactId>
+    </dependency>
   </dependencies>
 
   <build>

@@ -1,0 +1,21 @@
+<html>
+  <head>
+    <title>Welcome!</title>
+<style>
+img {
+  display: block;
+  float: left;
+  padding: 8px;
+  margin: 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+</style>
+  </head>
+  <body>
+    <h1>Pictures</h1>
+    {% for photo in photos %}
+    <img src="{{ photo.src.medium }}"></img>
+    {% endfor %}
+  </body>
+</html>
