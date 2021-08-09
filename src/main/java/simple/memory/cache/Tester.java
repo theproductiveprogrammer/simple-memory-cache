@@ -24,7 +24,7 @@ public class Tester {
     SimpleMemoryCache<String, PexelPhotoResponse> cache;
 
     public Tester() {
-        cache = new SimpleMemoryCache(5);
+        cache = new SimpleMemoryCache(5, 30*1000);
     }
 
     @Inject
