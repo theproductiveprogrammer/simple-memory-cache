@@ -43,6 +43,7 @@ public class SimpleMemoryCache<K,V> {
                 if(c != null && (now > (ttl + c.ts))) itr.remove();
             }
         }
+        Thread.yield();
     }
 
     public V get(K k) {
