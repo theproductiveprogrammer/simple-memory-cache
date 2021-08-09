@@ -3,10 +3,12 @@ package simple.memory.cache;
 import io.micronaut.http.annotation.Controller;
 import io.micronaut.http.annotation.Get;
 import io.micronaut.http.client.annotation.Client;
-import io.micronaut.http.client.HttpClient;
+import io.micronaut.http.client.RxHttpClient;
 import io.micronaut.http.HttpRequest;
 import io.micronaut.views.View;
 import io.micronaut.http.uri.UriBuilder;
+
+import io.reactivex.Maybe;
 
 import javax.inject.Inject;
 
@@ -21,25 +23,26 @@ public class Tester {
 
     @Inject
     @Client
-    HttpClient client;
+    RxHttpClient client;
 
     @View("/index")
     @Get
-    public PexelPhotoResponse index(String q) {
+    public Maybe<PexelPhotoResponse> index(String q) {
         return main(q);
     }
 
     @Get("/pexels")
-    public PexelPhotoResponse main(String q) {
+    public Maybe<PexelPhotoResponse> main(String q) {
         String uri = UriBuilder.of("https://api.pexels.com/v1/search")
             .queryParam("query", q)
             .toString();
-        return client.toBlocking()
+        return client
                 .retrieve(
                         HttpRequest.GET(uri)
                         .header("Authorization", "<<your auth key>>"),
                         PexelPhotoResponse.class
-                        );
+                        )
+                .firstElement();
     }
 
 @Generated("jsonschema2pojo")
