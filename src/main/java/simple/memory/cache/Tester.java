@@ -21,6 +21,8 @@ import javax.annotation.Generated;
 @Controller
 public class Tester {
 
+    SimpleMemoryCache<String, PexelPhotoResponse> cache = new SimpleMemoryCache();
+
     @Inject
     @Client
     RxHttpClient client;
@@ -33,16 +35,23 @@ public class Tester {
 
     @Get("/pexels")
     public Maybe<PexelPhotoResponse> main(String q) {
+        PexelPhotoResponse cached = cache.get(q);
+        if(cached != null) return Maybe.just(cached);
+
         String uri = UriBuilder.of("https://api.pexels.com/v1/search")
             .queryParam("query", q)
             .toString();
-        return client
+
+        Maybe<PexelPhotoResponse> resp = client
                 .retrieve(
                         HttpRequest.GET(uri)
                         .header("Authorization", "<<your auth key>>"),
                         PexelPhotoResponse.class
                         )
                 .firstElement();
+
+        resp.subscribe(ppr -> cache.put(q, ppr));
+        return resp;
     }
 
 @Generated("jsonschema2pojo")
