@@ -19,7 +19,8 @@ public class Tester {
     public String index() {
         return client.toBlocking()
                 .retrieve(
-                        HttpRequest.GET("https://reqres.in/api/users?page=2")
+                        HttpRequest.GET("https://api.pexels.com/v1/search?query=nature")
+                        .header("Authorization", "<<your auth key>>")
                         );
     }
 }
