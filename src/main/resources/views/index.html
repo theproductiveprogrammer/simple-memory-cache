@@ -2,9 +2,19 @@
   <head>
     <title>Welcome!</title>
 <style>
+.col {
+  float: left;
+  width: 28%;
+  margin: 1%;
+}
+.col:nth-child(3n):after {
+  content: "";
+  clear: both;
+  display: table;
+}
 img {
   display: block;
-  float: left;
+  width: 100%;
   padding: 8px;
   margin: 8px;
   border: 1px solid #ddd;
@@ -14,8 +24,12 @@ img {
   </head>
   <body>
     <h1>Pictures</h1>
+    <ul>
     {% for photo in photos %}
-    <img src="{{ photo.src.medium }}"></img>
+    <li class="col">
+      <img src="{{ photo.src.medium }}"></img>
+    </li>
     {% endfor %}
+    </ul>
   </body>
 </html>
